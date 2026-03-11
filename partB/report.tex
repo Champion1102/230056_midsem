@@ -1,0 +1,83 @@
+\documentclass[10pt, conference]{IEEEtran}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{float}
+
+\title{Reproduction and Analysis of Prototype Vector Machine for Large Scale Semi-Supervised Learning}
+
+\author{
+\IEEEauthorblockN{Ritesh Patil}
+\IEEEauthorblockA{Roll Number: 230056 \\
+NST, Rishihood University, Sonipat \\
+Advanced Machine Learning --- Mid-Semester Examination, Part B}
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Paper Summary}
+
+The Prototype Vector Machine (PVM) by Zhang, Kwok, and Parvin (ICML 2009) addresses the scalability problem of graph-based semi-supervised learning (SSL). Traditional graph-based SSL methods like LGC and Laplacian Regularized Least Squares require manipulating an $n \times n$ kernel matrix, leading to $O(n^3)$ complexity and $O(n^2)$ memory. PVM introduces two types of ``prototype vectors'' selected via $k$-means clustering: (1) low-rank approximation prototypes that enable Nystr\"{o}m approximation of the kernel matrix (reducing the cost of graph regularization), and (2) label-reconstruction prototypes that compress the model from $n$ expansion coefficients to only $k$ prototype labels. The authors show that for the Gaussian kernel, both prototype selection criteria reduce to the $k$-means objective, providing a unified and principled prototype selection strategy. This yields a method with $O((m+k)^2 \cdot n)$ complexity, nearly linear in $n$, while maintaining accuracy competitive with full graph-based SSL methods across 15 benchmark datasets.
+
+\section{Reproduction Setup and Results}
+
+I implemented PVM(1) (the L2-loss variant, Section 4.1, Equation 9) in Python using NumPy and SciPy. The implementation follows the paper's algorithm: (1) run $k$-means on all data to select $m$ prototypes, (2) compute the Nystr\"{o}m cross-similarity matrices $W$ ($m \times m$) and $E$ ($n \times m$), (3) build the row-normalized label-reconstruction matrix $H$, (4) compute $H^T S H$ efficiently, and (5) solve the closed-form system for prototype labels $f_v^*$.
+
+The primary test dataset was the Two Moons dataset (1000 samples, 2 features, 5 labels per class), chosen because the paper itself uses a 2-moon dataset in Table 1. I used $m = 20$ prototypes and $C_2 = 0$ following the paper's setup. The kernel parameter $b$ was searched over $b_0 \times \{2^{-5}, \ldots, 2^5\}$ as described in Section 5.
+
+Over 30 random trials (random labeled subsets), PVM(1) achieved a classification error of approximately 2--5\%, compared to the paper's reported 0.092\%. The gap is expected: the paper uses a specific benchmark 2-moon dataset from Chapelle et al.\ (2006) with only 1 label per class, while I used scikit-learn's \texttt{make\_moons} with 5 labels per class and different noise characteristics. Additionally, the paper likely performed more thorough cross-validation over both $b$ and $C_1$ simultaneously. Despite the numerical difference, the key qualitative result holds: PVM successfully classifies two non-linearly separable crescents using very few labels by leveraging graph structure, and runs significantly faster than full graph-based methods.
+
+\section{Ablation Findings}
+
+\subsection{Ablation 1: Removing Graph Regularization}
+
+Setting $H^T S H = 0$ in Equation 9 removes the graph-based regularization term entirely. Without it, PVM reduces to a kernel-based supervised classifier that can only learn from the 10 labeled points, ignoring the manifold structure of the 990 unlabeled points. This dramatically increased the error rate, confirming that graph regularization is the essential mechanism that makes PVM work as a semi-supervised learner. The term $f^T S f$ propagates label information along the data manifold, and without it, the non-linear decision boundary cannot be recovered from so few labels.
+
+\subsection{Ablation 2: Random vs.\ K-Means Prototypes}
+
+Replacing $k$-means cluster centers with randomly sampled data points tests the paper's core theoretical contribution --- that $k$-means centers are optimal Nystr\"{o}m landmarks and label-reconstruction prototypes for the Gaussian kernel (Equation 8). Random prototypes produced higher and more variable error across trials. K-means centers provide better spatial coverage of the data, leading to more accurate kernel matrix approximation and more faithful label reconstruction. This validates the paper's claim that principled prototype selection via $k$-means outperforms naive random sampling, as originally used in the Nystr\"{o}m method (Williams \& Seeger, 2001).
+
+\section{Failure Mode and Explanation}
+
+PVM was tested on a 4$\times$4 checkerboard dataset (800 samples, 20 labels), where class labels alternate rapidly across a grid. PVM's error rate was close to random guessing ($\sim$50\%), in stark contrast to its strong performance on Two Moons.
+
+This failure directly stems from the violation of the smoothness assumption (Section 2, Equation 1). The graph regularization term $f^T S f$ penalizes label disagreements between nearby points. In a checkerboard, nearby points across grid boundaries belong to different classes, so the regularizer actively fights against the correct labeling. Additionally, $k$-means prototypes are placed at geometric centers of spatial regions, not respecting the grid boundaries that define class structure. A potential fix would be to use a locally adaptive kernel that downweights edges between points in regions with high label gradient, preventing the regularizer from smoothing across true decision boundaries.
+
+\section{Reflection}
+
+I was not able to implement PVM(2) (the hinge loss variant), which requires solving a quadratic programming problem --- the additional complexity of handling negative eigenvalues in matrix $A$ and setting up the dual formulation was beyond the time I allocated. Additionally, I could not perfectly reproduce the paper's reported error of 0.092\% on the 2-moon dataset, though the qualitative results match.
+
+What surprised me was how sensitive PVM is to the kernel bandwidth parameter $b$. A wrong choice of $b$ (too small or too large) would completely break the method, producing either near-random or degenerate predictions. The paper's search range $b_0 \times \{2^{-5}, \ldots, 2^5\}$ was essential for finding a working configuration.
+
+If I had more time, I would investigate: (1) implementing PVM(2) with hinge loss, (2) testing on higher-dimensional datasets like USPS digits to evaluate scalability claims, and (3) exploring how the number of prototypes $m$ affects accuracy versus speed on larger datasets, to verify the linear scaling property shown in Figure 2(a) of the paper.
+
+\begin{thebibliography}{9}
+
+\bibitem{pvm}
+K.~Zhang, J.~T.~Kwok, and B.~Parvin, ``Prototype Vector Machine for Large Scale Semi-Supervised Learning,'' in \textit{Proc.\ 26th Int.\ Conf.\ on Machine Learning (ICML)}, 2009.
+
+\bibitem{lgc}
+D.~Zhou, O.~Bousquet, T.~N.~Lal, J.~Weston, and B.~Sch\"{o}lkopf, ``Learning with Local and Global Consistency,'' in \textit{NIPS}, 2003.
+
+\bibitem{laprls}
+M.~Belkin, P.~Niyogi, and V.~Sindhwani, ``Manifold Regularization: A Geometric Framework for Learning from Labeled and Unlabeled Examples,'' \textit{JMLR}, vol.~7, pp.~2399--2434, 2006.
+
+\bibitem{nystrom}
+C.~Williams and M.~Seeger, ``Using the Nystr\"{o}m Method to Speed Up Kernel Machines,'' in \textit{NIPS}, 2001.
+
+\bibitem{nfi}
+O.~Delalleau, Y.~Bengio, and N.~Roux, ``Efficient Non-parametric Function Induction in Semi-supervised Learning,'' in \textit{AISTATS}, 2005.
+
+\bibitem{sslbook}
+O.~Chapelle, B.~Sch\"{o}lkopf, and A.~Zien, \textit{Semi-Supervised Learning}. MIT Press, 2006.
+
+\bibitem{nystrom_improved}
+K.~Zhang and J.~T.~Kwok, ``Improved Nystr\"{o}m Low-Rank Approximation and Error Analysis,'' in \textit{ICML}, 2008.
+
+\end{thebibliography}
+
+\end{document}

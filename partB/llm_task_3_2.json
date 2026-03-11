@@ -1,0 +1,90 @@
+{
+  "student_metadata": {
+    "name": "Ritesh Patil",
+    "roll_number": "230056",
+    "course": "Advanced Machine Learning",
+    "exam": "Mid-Semester Examination",
+    "part": "Part B",
+    "submission_date": "2026-03-12"
+  },
+  "llm_tools_used": [
+    {
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "provider": "Anthropic"
+    }
+  ],
+  "full_llm_interaction_log": [
+    {
+      "interaction_id": 1,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 3.2",
+      "purpose": "Brainstorm potential failure modes of PVM",
+      "prompt": "What are some scenarios where PVM would fail or perform poorly? I need to design an experiment that demonstrates a clear failure mode. I'm thinking about cases where the cluster assumption doesn't hold, but I want more specific ideas.",
+      "llm_response_used": "Yes",
+      "how_it_helped": "The LLM suggested several failure scenarios: (1) when data has overlapping class distributions (no clear cluster boundary), (2) when the manifold has very high intrinsic dimensionality, (3) when labeled data is not representative of the class distribution, (4) when there are many small clusters rather than a few large ones. I chose scenario (1) as my main failure mode experiment.",
+      "student_verification": "These all make theoretical sense given PVM's assumptions. I decided to focus on overlapping distributions because it directly violates the cluster assumption which is central to PVM. I can construct this synthetically using two Gaussians with varying overlap.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 4
+    },
+    {
+      "interaction_id": 2,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 3.2",
+      "purpose": "Help generating synthetic data for the failure mode experiment",
+      "prompt": "Can you help me generate a synthetic 2D dataset where two classes have significant overlap? I want to control the degree of overlap with a parameter so I can show PVM's accuracy degrading as overlap increases. Something like two Gaussian blobs where I vary the distance between centers.",
+      "llm_response_used": "Yes",
+      "how_it_helped": "Provided code using sklearn.datasets.make_classification with controlled class_sep parameter. Also suggested an alternative approach using two multivariate Gaussians with explicit mean and covariance control, which I preferred since it's more transparent.",
+      "student_verification": "Plotted the generated data at different overlap levels to visually confirm the overlap increases as expected. At class_sep=0.5 there's heavy overlap, at class_sep=2.0 the classes are well-separated.",
+      "code_used_verbatim": true,
+      "student_modification": "Used the multivariate Gaussian approach instead of make_classification for more explicit control. Changed the dimensionality from 2D to 10D with only the first 2 dimensions having class-discriminative information, making it a more realistic scenario. Also added 500 unlabeled points per class instead of the LLM's 100.",
+      "confidence_level": 4
+    },
+    {
+      "interaction_id": 3,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 3.2",
+      "purpose": "Analyze and visualize the failure mode results",
+      "prompt": "I ran PVM and a regular SVM on my overlapping Gaussians dataset with varying overlap. Results:\n\nclass_sep=2.0: PVM=94%, SVM=92%\nclass_sep=1.5: PVM=89%, SVM=87%  \nclass_sep=1.0: PVM=78%, SVM=80%\nclass_sep=0.5: PVM=62%, SVM=68%\nclass_sep=0.3: PVM=55%, SVM=61%\n\nSo PVM actually does worse than SVM when there's high overlap. Can you help me make a plot and explain why this happens?",
+      "llm_response_used": "Partially",
+      "how_it_helped": "The LLM created a line plot showing accuracy vs class_sep and provided an explanation: when classes overlap heavily, the graph structure connects points from different classes, causing the manifold regularization to actually hurt by smoothing across class boundaries. This was a good insight that I used in my writeup.",
+      "student_verification": "The explanation about manifold regularization hurting in the overlapping case makes sense - if nearby points belong to different classes, the graph regularization forces similar predictions on them, which is wrong. I verified this by checking the graph: at high overlap, ~30% of k-NN edges cross class boundaries. Added this quantitative analysis to my report.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 5
+    }
+  ],
+  "top_5_prompts": [
+    {
+      "rank": 1,
+      "interaction_id": 1,
+      "prompt": "What are some scenarios where PVM would fail or perform poorly? I need to design an experiment that demonstrates a clear failure mode.",
+      "why_important": "Identifying the right failure scenario is the core challenge of Task 3.2."
+    },
+    {
+      "rank": 2,
+      "interaction_id": 3,
+      "prompt": "I ran PVM and a regular SVM on my overlapping Gaussians dataset with varying overlap... So PVM actually does worse than SVM when there's high overlap. Can you help me make a plot and explain why this happens?",
+      "why_important": "Understanding WHY PVM fails is more important than just showing it fails - this prompt helped me get the theoretical explanation."
+    },
+    {
+      "rank": 3,
+      "interaction_id": 2,
+      "prompt": "Can you help me generate a synthetic 2D dataset where two classes have significant overlap?",
+      "why_important": "The synthetic dataset design directly determines the quality of the failure mode demonstration."
+    }
+  ],
+  "student_declaration": {
+    "statement": "I declare that this JSON file contains a complete and honest record of my LLM usage for Part B.",
+    "understanding_acknowledged": true,
+    "signature": "Ritesh Patil",
+    "date": "2026-03-12"
+  }
+}

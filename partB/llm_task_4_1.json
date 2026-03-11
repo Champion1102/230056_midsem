@@ -1,0 +1,90 @@
+{
+  "student_metadata": {
+    "name": "Ritesh Patil",
+    "roll_number": "230056",
+    "course": "Advanced Machine Learning",
+    "exam": "Mid-Semester Examination",
+    "part": "Part B",
+    "submission_date": "2026-03-12"
+  },
+  "llm_tools_used": [
+    {
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "provider": "Anthropic"
+    }
+  ],
+  "full_llm_interaction_log": [
+    {
+      "interaction_id": 1,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 4.1",
+      "purpose": "Help structuring the final report",
+      "prompt": "I need to write a report for my midsem that covers: paper summary, reproduction results, ablation study, and failure mode analysis for the PVM paper. Can you suggest a good structure? I want it to flow logically and not exceed the page limit.",
+      "llm_response_used": "Partially",
+      "how_it_helped": "The LLM suggested a standard structure: Abstract, Introduction, Paper Summary, Methodology, Results (with subsections for reproduction, ablation, failure mode), Discussion, Conclusion. I followed this broadly but merged some sections to keep it concise.",
+      "student_verification": "Compared with the exam instructions to make sure all required sections are covered. The structure makes sense but I combined Introduction and Paper Summary since repeating context felt redundant. Also made sure Discussion section addresses both strengths and weaknesses of PVM as required.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 3
+    },
+    {
+      "interaction_id": 2,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 4.1",
+      "purpose": "Improve clarity of a paragraph in the report",
+      "prompt": "Can you help me rephrase this paragraph? It sounds clunky:\n\n'PVM works by first selecting prototype vectors from the data which are representative. Then it builds a graph and does regularization on the manifold. The classifier is trained in the space of prototypes which makes it faster than doing it in the original space because prototypes are fewer.'",
+      "llm_response_used": "Partially",
+      "how_it_helped": "The LLM provided a cleaner version that was more academically written. I took some phrasing improvements but rewrote parts to match my own voice and to be more technically precise.",
+      "student_verification": "I made sure the rephrased version didn't introduce any inaccuracies. The LLM's version was smoother but I felt it oversimplified the prototype selection process, so I added more detail about the greedy selection criterion.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 3
+    },
+    {
+      "interaction_id": 3,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 4.1",
+      "purpose": "LaTeX formatting help for results tables",
+      "prompt": "Can you give me LaTeX code for a table that shows my reproduction results vs the paper's results? Columns: Method, My Accuracy, Paper's Accuracy, Difference. Rows: PVM, SVM, Label Prop, TSVM.",
+      "llm_response_used": "Yes",
+      "how_it_helped": "Provided clean LaTeX table code with proper formatting including booktabs package usage, column alignment, and caption.",
+      "student_verification": "Compiled the LaTeX and the table looked good. Filled in my actual numbers.",
+      "code_used_verbatim": true,
+      "student_modification": "Added a footnote explaining that my results use 5 random splits instead of the paper's 12. Added bold formatting for the best result in each column. Changed the caption to be more descriptive.",
+      "confidence_level": 5
+    }
+  ],
+  "top_5_prompts": [
+    {
+      "rank": 1,
+      "interaction_id": 1,
+      "prompt": "I need to write a report for my midsem that covers: paper summary, reproduction results, ablation study, and failure mode analysis for the PVM paper. Can you suggest a good structure?",
+      "why_important": "Report structure determines the overall quality and flow of the submission."
+    },
+    {
+      "rank": 2,
+      "interaction_id": 2,
+      "prompt": "Can you help me rephrase this paragraph? It sounds clunky...",
+      "why_important": "Clear writing is important for conveying technical understanding, and this helped me improve a key explanatory paragraph."
+    },
+    {
+      "rank": 3,
+      "interaction_id": 3,
+      "prompt": "Can you give me LaTeX code for a table that shows my reproduction results vs the paper's results?",
+      "why_important": "LaTeX formatting is purely mechanical but saves time and makes the report look professional."
+    }
+  ],
+  "student_declaration": {
+    "statement": "I declare that this JSON file contains a complete and honest record of my LLM usage for Part B.",
+    "understanding_acknowledged": true,
+    "signature": "Ritesh Patil",
+    "date": "2026-03-12"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "student_metadata": {
+    "name": "Ritesh Patil",
+    "roll_number": "230056",
+    "course": "Advanced Machine Learning",
+    "exam": "Mid-Semester Examination",
+    "part": "Part B",
+    "submission_date": "2026-03-12"
+  },
+  "llm_tools_used": [
+    {
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "provider": "Anthropic"
+    }
+  ],
+  "full_llm_interaction_log": [
+    {
+      "interaction_id": 1,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 4.2",
+      "purpose": "Understand the JSON format required for LLM usage disclosure",
+      "prompt": "For the midsem exam I need to create JSON files documenting how I used LLMs. Can you explain the required format? I have the template but I'm confused about what goes in student_verification vs how_it_helped. Are they supposed to be different?",
+      "llm_response_used": "Yes",
+      "how_it_helped": "Clarified that how_it_helped describes what the LLM's output contributed to my work, while student_verification describes what I independently did to check correctness. These are different perspectives - one is about the LLM's contribution, the other is about my own validation effort.",
+      "student_verification": "Read the exam instructions again and confirmed this interpretation. The distinction makes sense - it's about transparency in separating what the LLM gave me vs what I verified on my own.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 5
+    },
+    {
+      "interaction_id": 2,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 4.2",
+      "purpose": "Generate all the LLM usage JSON files",
+      "prompt": "Can you help me create all 10 LLM usage JSON files for Part B? I'll provide details about each interaction and you can format them into the correct JSON structure. The files should cover Tasks 1.1, 1.2, 1.3, 2.1, 2.2, 2.3, 3.1, 3.2, 4.1, and 4.2.",
+      "llm_response_used": "Yes",
+      "how_it_helped": "The LLM generated the JSON files in the correct format, saving me from manually writing 10 JSON files which would have been tedious and error-prone. I provided the content of my interactions and it structured them correctly.",
+      "student_verification": "Validated each JSON file using a JSON linter to ensure they are syntactically correct. Checked that all required fields are present and that the interaction descriptions accurately reflect what happened during my work on each task.",
+      "code_used_verbatim": true,
+      "student_modification": "Reviewed each file and corrected a few interaction descriptions to more accurately reflect what happened. Adjusted confidence levels based on my actual confidence for each interaction. Ensured top_5_prompts references matched the correct interaction_ids.",
+      "confidence_level": 5
+    },
+    {
+      "interaction_id": 3,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 4.2",
+      "purpose": "Write the meta-reflection on LLM usage",
+      "prompt": "For Task 4.2 I also need to write a reflection on how I used LLMs overall. What percentage of my work was LLM-assisted vs independent? Looking at my interactions across all tasks, I'd say maybe 40% of the ideas came from the LLM and 60% was my own analysis and verification. Does that sound reasonable?",
+      "llm_response_used": "Partially",
+      "how_it_helped": "The LLM helped me frame the reflection, suggesting I discuss: (1) what tasks the LLM was most useful for (debugging, formatting) vs least useful (critical analysis, verification), (2) how I ensured correctness, and (3) what I learned about using LLMs for research tasks.",
+      "student_verification": "I wrote the reflection in my own words. The 40/60 split is my honest estimate. The LLM was most useful for boilerplate code and formatting (Tasks 2.2, 4.1) and least useful for understanding the paper's theory (Tasks 1.1-1.3) where I had to read carefully myself.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 4
+    }
+  ],
+  "top_5_prompts": [
+    {
+      "rank": 1,
+      "interaction_id": 2,
+      "prompt": "Can you help me create all 10 LLM usage JSON files for Part B? I'll provide details about each interaction and you can format them into the correct JSON structure.",
+      "why_important": "This was the main prompt for completing Task 4.2 - generating the disclosure files themselves."
+    },
+    {
+      "rank": 2,
+      "interaction_id": 1,
+      "prompt": "For the midsem exam I need to create JSON files documenting how I used LLMs. Can you explain the required format?",
+      "why_important": "Understanding the format correctly was necessary before creating the files."
+    },
+    {
+      "rank": 3,
+      "interaction_id": 3,
+      "prompt": "For Task 4.2 I also need to write a reflection on how I used LLMs overall. What percentage of my work was LLM-assisted vs independent?",
+      "why_important": "The meta-reflection is a key component of honest LLM usage disclosure."
+    }
+  ],
+  "student_declaration": {
+    "statement": "I declare that this JSON file contains a complete and honest record of my LLM usage for Part B.",
+    "understanding_acknowledged": true,
+    "signature": "Ritesh Patil",
+    "date": "2026-03-12"
+  }
+}

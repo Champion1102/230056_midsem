@@ -1,0 +1,90 @@
+{
+  "student_metadata": {
+    "name": "Ritesh Patil",
+    "roll_number": "230056",
+    "course": "Advanced Machine Learning",
+    "exam": "Mid-Semester Examination",
+    "part": "Part B",
+    "submission_date": "2026-03-12"
+  },
+  "llm_tools_used": [
+    {
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "provider": "Anthropic"
+    }
+  ],
+  "full_llm_interaction_log": [
+    {
+      "interaction_id": 1,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 1.1",
+      "purpose": "Understand the core contribution of the Prototype Vector Machine paper",
+      "prompt": "I'm reading this paper called 'Prototype Vector Machine for Large Scale Semi-Supervised Learning' from ICML 2009. Can you explain to me what exactly is the core contribution? Like what new thing does PVM bring compared to existing semi-supervised methods at that time?",
+      "llm_response_used": "Partially",
+      "how_it_helped": "Gave me a structured breakdown of the PVM architecture - how it uses prototype vectors to represent cluster structure in the data and combines graph-based SSL with efficient optimization. Helped me frame my own summary.",
+      "student_verification": "I cross-checked the contribution claims against Section 1 (Introduction) and Section 3 of the paper. The LLM's summary was mostly accurate but I corrected some details about how the prototypes are selected - the paper uses a specific greedy selection strategy, not k-means as the LLM initially implied.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 4
+    },
+    {
+      "interaction_id": 2,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 1.1",
+      "purpose": "Clarify the architecture and how PVM relates to graph-based methods",
+      "prompt": "In the PVM paper, how does the prototype vector approach actually work architecturally? I get that they pick some representative points but I'm confused about the optimization objective. Is it like a modified SVM or something different entirely?",
+      "llm_response_used": "Yes",
+      "how_it_helped": "Helped me understand the connection between prototype vectors and the graph Laplacian regularization. The LLM explained that PVM formulates a convex optimization problem where prototypes define a low-dimensional representation and the classifier operates in that space, which made the architecture click for me.",
+      "student_verification": "Verified against Equations 3-6 in the paper. The optimization formulation description was accurate. I also checked that the connection to manifold regularization was correctly described by comparing with Belkin et al. references in the paper.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 4
+    },
+    {
+      "interaction_id": 3,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 1.1",
+      "purpose": "Help structuring the Task 1.1 writeup",
+      "prompt": "Can you help me outline what I should cover in a 300-word summary of PVM's core contribution and architecture? I want to make sure I don't miss any key points.",
+      "llm_response_used": "Partially",
+      "how_it_helped": "Gave me a checklist of points to cover: scalability advantage, prototype selection mechanism, optimization formulation, connection to graph-based SSL. I reorganized these according to my own understanding and added points about computational complexity that the LLM didn't mention.",
+      "student_verification": "I used this as a rough guide but wrote the actual summary entirely in my own words after re-reading the relevant sections of the paper.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 3
+    }
+  ],
+  "top_5_prompts": [
+    {
+      "rank": 1,
+      "interaction_id": 2,
+      "prompt": "In the PVM paper, how does the prototype vector approach actually work architecturally? I get that they pick some representative points but I'm confused about the optimization objective. Is it like a modified SVM or something different entirely?",
+      "why_important": "This was the key prompt that helped me actually understand the paper's architecture, which is the central requirement of Task 1.1."
+    },
+    {
+      "rank": 2,
+      "interaction_id": 1,
+      "prompt": "I'm reading this paper called 'Prototype Vector Machine for Large Scale Semi-Supervised Learning' from ICML 2009. Can you explain to me what exactly is the core contribution? Like what new thing does PVM bring compared to existing semi-supervised methods at that time?",
+      "why_important": "This initial exploration helped me identify the novelty of PVM before I dove into the technical details."
+    },
+    {
+      "rank": 3,
+      "interaction_id": 3,
+      "prompt": "Can you help me outline what I should cover in a 300-word summary of PVM's core contribution and architecture? I want to make sure I don't miss any key points.",
+      "why_important": "Helped me structure my final answer and make sure I covered all important aspects."
+    }
+  ],
+  "student_declaration": {
+    "statement": "I declare that this JSON file contains a complete and honest record of my LLM usage for Part B.",
+    "understanding_acknowledged": true,
+    "signature": "Ritesh Patil",
+    "date": "2026-03-12"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "student_metadata": {
+    "name": "Ritesh Patil",
+    "roll_number": "230056",
+    "course": "Advanced Machine Learning",
+    "exam": "Mid-Semester Examination",
+    "part": "Part B",
+    "submission_date": "2026-03-12"
+  },
+  "llm_tools_used": [
+    {
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "provider": "Anthropic"
+    }
+  ],
+  "full_llm_interaction_log": [
+    {
+      "interaction_id": 1,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 2.2",
+      "purpose": "Get help implementing the prototype selection step of PVM",
+      "prompt": "I need to implement PVM's prototype selection in Python. The paper says they use a greedy strategy to select prototypes that maximize coverage of the unlabeled data. Can you write a function that selects m prototypes from a dataset using a greedy facility location approach?",
+      "llm_response_used": "Yes",
+      "how_it_helped": "The LLM provided a Python function that implements greedy prototype selection using pairwise distances. It iteratively picks the point that maximizes the minimum distance to already selected prototypes (a k-center style approach).",
+      "student_verification": "I traced through the algorithm with a small toy dataset (5 points in 2D) to verify it selects spread-out points. The logic was correct. I also compared it against the paper's description in Section 3.1.",
+      "code_used_verbatim": true,
+      "student_modification": "Changed the distance metric from Euclidean to RBF kernel distance to match the paper. Also added a random seed parameter for reproducibility and modified the function signature to accept precomputed distance matrices for efficiency with large datasets.",
+      "confidence_level": 4
+    },
+    {
+      "interaction_id": 2,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 2.2",
+      "purpose": "Debug the graph Laplacian construction",
+      "prompt": "I'm building the graph Laplacian for PVM and getting a singular matrix when I try to invert it. Here's my code:\n\nfrom sklearn.neighbors import kneighbors_graph\nW = kneighbors_graph(X, n_neighbors=10, mode='connectivity')\nW = 0.5 * (W + W.T)\nD = np.diag(W.sum(axis=1))\nL = D - W\n\nThe issue is L is singular. What am I doing wrong?",
+      "llm_response_used": "Yes",
+      "how_it_helped": "The LLM pointed out that the graph Laplacian is always singular (has a zero eigenvalue for each connected component) and I should use the normalized Laplacian or add a small regularization term. It also caught that np.diag wouldn't work with the sparse matrix output from kneighbors_graph.",
+      "student_verification": "I realized the singularity is a fundamental property of graph Laplacians (zero eigenvalue for constant vector). Fixed the code using scipy.sparse for the diagonal matrix and added the regularization term as suggested. Tested that the resulting matrix was invertible.",
+      "code_used_verbatim": true,
+      "student_modification": "Changed the regularization constant from 1e-6 (LLM suggestion) to 1e-4 after experimentation showed that 1e-6 still caused numerical instability with USPS. Also switched to using scipy.sparse.diags instead of np.diag as the LLM suggested, but kept using CSR format throughout for consistency.",
+      "confidence_level": 4
+    },
+    {
+      "interaction_id": 3,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 2.2",
+      "purpose": "Implement the PVM optimization step",
+      "prompt": "Now I need to implement the actual PVM classifier training. After selecting prototypes and building the graph, I need to solve the optimization problem. The paper formulates it as a convex QP. Can you help me set this up using cvxpy or scipy.optimize?",
+      "llm_response_used": "Partially",
+      "how_it_helped": "The LLM provided a cvxpy formulation but it didn't exactly match the paper's objective function. However, the general structure of setting up the QP with manifold regularization was helpful as a starting template.",
+      "student_verification": "I compared the LLM's objective function term by term against Equation 5 in the paper. Found two issues: (1) the manifold regularization term was using L instead of the prototype-projected Laplacian, and (2) the loss function should be hinge loss not squared loss. Fixed both.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 3
+    },
+    {
+      "interaction_id": 4,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 2.2",
+      "purpose": "Fix a shape mismatch error in the implementation",
+      "prompt": "Getting this error when running PVM training: ValueError: shapes (100,256) and (50,) not aligned. The 100 is my number of prototypes, 256 is feature dim, and 50 is number of labeled points. What's wrong with my matrix multiplication?",
+      "llm_response_used": "Yes",
+      "how_it_helped": "The LLM identified that I was multiplying the prototype-feature matrix by the label vector directly, but I need to first project the labeled data into the prototype space using kernel evaluations between labeled points and prototypes, giving a (50, 100) matrix, then multiply by the weight vector.",
+      "student_verification": "Re-read Section 3.2 of the paper and confirmed the data flow: raw features -> kernel evaluations with prototypes -> projected representation -> classifier weights. Fixed the matrix dimensions and the code ran without errors.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 4
+    }
+  ],
+  "top_5_prompts": [
+    {
+      "rank": 1,
+      "interaction_id": 3,
+      "prompt": "Now I need to implement the actual PVM classifier training. After selecting prototypes and building the graph, I need to solve the optimization problem. The paper formulates it as a convex QP. Can you help me set this up using cvxpy or scipy.optimize?",
+      "why_important": "The optimization setup is the core of PVM implementation and getting it right was critical for reproduction."
+    },
+    {
+      "rank": 2,
+      "interaction_id": 2,
+      "prompt": "I'm building the graph Laplacian for PVM and getting a singular matrix when I try to invert it. Here's my code...",
+      "why_important": "This debugging interaction saved me significant time and taught me about Laplacian properties I'd forgotten."
+    },
+    {
+      "rank": 3,
+      "interaction_id": 1,
+      "prompt": "I need to implement PVM's prototype selection in Python. The paper says they use a greedy strategy to select prototypes that maximize coverage of the unlabeled data.",
+      "why_important": "Prototype selection is the first step of PVM and getting it right affects everything downstream."
+    },
+    {
+      "rank": 4,
+      "interaction_id": 4,
+      "prompt": "Getting this error when running PVM training: ValueError: shapes (100,256) and (50,) not aligned.",
+      "why_important": "Resolved a blocking shape mismatch that I couldn't figure out on my own quickly."
+    }
+  ],
+  "student_declaration": {
+    "statement": "I declare that this JSON file contains a complete and honest record of my LLM usage for Part B.",
+    "understanding_acknowledged": true,
+    "signature": "Ritesh Patil",
+    "date": "2026-03-12"
+  }
+}

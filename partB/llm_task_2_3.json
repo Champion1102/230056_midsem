@@ -1,0 +1,90 @@
+{
+  "student_metadata": {
+    "name": "Ritesh Patil",
+    "roll_number": "230056",
+    "course": "Advanced Machine Learning",
+    "exam": "Mid-Semester Examination",
+    "part": "Part B",
+    "submission_date": "2026-03-12"
+  },
+  "llm_tools_used": [
+    {
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "provider": "Anthropic"
+    }
+  ],
+  "full_llm_interaction_log": [
+    {
+      "interaction_id": 1,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 2.3",
+      "purpose": "Help with evaluation metrics and comparison table generation",
+      "prompt": "I've run PVM on USPS with 10 labeled samples per class and also ran Label Propagation and SVM baselines. How do I properly compare these? Should I just report accuracy or do I need other metrics? Also can you help me make a clean comparison table in Python?",
+      "llm_response_used": "Yes",
+      "how_it_helped": "The LLM suggested reporting accuracy, macro-F1, and standard deviation across multiple random splits (which the paper also does). It also gave me pandas code to create a formatted comparison table.",
+      "student_verification": "Checked that the paper reports accuracy with std deviation across 12 random splits. I used the same protocol. The pandas table code was straightforward and I verified the numbers matched my raw results.",
+      "code_used_verbatim": true,
+      "student_modification": "Added a column for runtime comparison which the LLM didn't include. Also changed the table formatting to use 2 decimal places instead of 4 to match the paper's reporting style. Added a row for the paper's reported numbers for direct comparison.",
+      "confidence_level": 4
+    },
+    {
+      "interaction_id": 2,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 2.3",
+      "purpose": "Understand why my reproduced results differ from the paper",
+      "prompt": "My PVM accuracy on USPS is about 3-4% lower than what the paper reports. Is this normal for reproduction studies? What could cause the gap? I used the same number of prototypes and labeled samples.",
+      "llm_response_used": "Yes",
+      "how_it_helped": "The LLM explained several possible reasons: different random splits, different k in k-NN graph, kernel bandwidth differences, and minor implementation differences in the optimization solver. It noted that 3-4% difference is within a reasonable range for SSL reproduction.",
+      "student_verification": "I experimented with different k values for the graph (5, 10, 15, 20) and found that k=15 gave results closest to the paper. The kernel bandwidth was another factor - I had been using a fixed sigma but the paper uses a data-dependent bandwidth. After adjusting these, the gap reduced to about 1.5%.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 4
+    },
+    {
+      "interaction_id": 3,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 2.3",
+      "purpose": "Generate comparison plots",
+      "prompt": "Can you write matplotlib code to create a bar chart comparing accuracy of PVM vs baselines on USPS? I want error bars showing std deviation. Also a separate plot showing how PVM accuracy changes with number of prototypes.",
+      "llm_response_used": "Yes",
+      "how_it_helped": "Provided clean matplotlib code for both plots. The bar chart with error bars was exactly what I needed, and the prototype sensitivity plot helped me visualize an important trend.",
+      "student_verification": "Ran the code with my actual experimental results. The plots rendered correctly. I adjusted colors and labels to be more readable and added the paper's reported numbers as horizontal dashed lines for reference.",
+      "code_used_verbatim": true,
+      "student_modification": "Changed the color scheme to a colorblind-friendly palette. Added horizontal dashed lines showing the paper's reported accuracy. Changed figure size from (10,6) to (8,5) to fit better in my report. Added grid lines for readability.",
+      "confidence_level": 5
+    }
+  ],
+  "top_5_prompts": [
+    {
+      "rank": 1,
+      "interaction_id": 2,
+      "prompt": "My PVM accuracy on USPS is about 3-4% lower than what the paper reports. Is this normal for reproduction studies? What could cause the gap?",
+      "why_important": "Understanding and explaining the reproduction gap is a key part of Task 2.3's analysis."
+    },
+    {
+      "rank": 2,
+      "interaction_id": 1,
+      "prompt": "I've run PVM on USPS with 10 labeled samples per class and also ran Label Propagation and SVM baselines. How do I properly compare these?",
+      "why_important": "Proper evaluation methodology is essential for meaningful comparison."
+    },
+    {
+      "rank": 3,
+      "interaction_id": 3,
+      "prompt": "Can you write matplotlib code to create a bar chart comparing accuracy of PVM vs baselines on USPS?",
+      "why_important": "Visualization was needed to present results clearly in the report."
+    }
+  ],
+  "student_declaration": {
+    "statement": "I declare that this JSON file contains a complete and honest record of my LLM usage for Part B.",
+    "understanding_acknowledged": true,
+    "signature": "Ritesh Patil",
+    "date": "2026-03-12"
+  }
+}

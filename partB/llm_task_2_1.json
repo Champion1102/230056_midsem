@@ -1,0 +1,90 @@
+{
+  "student_metadata": {
+    "name": "Ritesh Patil",
+    "roll_number": "230056",
+    "course": "Advanced Machine Learning",
+    "exam": "Mid-Semester Examination",
+    "part": "Part B",
+    "submission_date": "2026-03-12"
+  },
+  "llm_tools_used": [
+    {
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "provider": "Anthropic"
+    }
+  ],
+  "full_llm_interaction_log": [
+    {
+      "interaction_id": 1,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 2.1",
+      "purpose": "Help choosing an appropriate dataset for reproducing PVM results",
+      "prompt": "I need to pick a dataset to reproduce results from the PVM paper. The paper uses datasets like USPS, COIL, BCI, and g241c. Which of these would be easiest to get and work with in Python? Or should I use a different dataset that's similar?",
+      "llm_response_used": "Yes",
+      "how_it_helped": "The LLM suggested using the USPS handwritten digits dataset since it's readily available through sklearn or direct download, is reasonably sized, and the paper reports detailed results on it. It also mentioned that g241c is a synthetic dataset from the Chapelle SSL benchmark which is also easy to generate.",
+      "student_verification": "I checked that USPS is available in sklearn.datasets and confirmed the paper has a dedicated results table for it. I decided to go with USPS as my primary dataset and g241c as secondary since both are manageable for the exam timeline.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 4
+    },
+    {
+      "interaction_id": 2,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 2.1",
+      "purpose": "Understand the semi-supervised data split used in the paper",
+      "prompt": "How does the PVM paper split the data into labeled and unlabeled sets? I need to replicate the same experimental setup. For USPS specifically, how many labeled examples do they use?",
+      "llm_response_used": "Partially",
+      "how_it_helped": "The LLM gave me a general description of the SSL evaluation protocol - using a small number of labeled points (like 10 or 100 per class) and treating the rest as unlabeled. However, it wasn't sure about the exact numbers for USPS in this specific paper.",
+      "student_verification": "I looked up Table 1 in the paper and found the exact labeled set sizes they used for each dataset. For USPS they use 10 labeled samples per class. I used these exact numbers rather than the LLM's general suggestions.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 3
+    },
+    {
+      "interaction_id": 3,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 2.1",
+      "purpose": "Justify dataset selection in the writeup",
+      "prompt": "Can you help me write a justification for why I chose USPS for reproducing PVM results? I need to explain why it's a good choice for evaluating semi-supervised learning methods.",
+      "llm_response_used": "Partially",
+      "how_it_helped": "Gave me some justification points: USPS has clear cluster structure making it suitable for SSL, it's a standard benchmark in the SSL literature, and it's computationally feasible. I adapted these points but added my own reasoning about why the 16x16 image resolution makes graph construction tractable.",
+      "student_verification": "The justification points align with what I've read in other SSL papers. I confirmed USPS is indeed a standard SSL benchmark by checking references in the PVM paper.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 4
+    }
+  ],
+  "top_5_prompts": [
+    {
+      "rank": 1,
+      "interaction_id": 1,
+      "prompt": "I need to pick a dataset to reproduce results from the PVM paper. The paper uses datasets like USPS, COIL, BCI, and g241c. Which of these would be easiest to get and work with in Python? Or should I use a different dataset that's similar?",
+      "why_important": "The dataset selection is the entire point of Task 2.1, so this prompt directly shaped my choice."
+    },
+    {
+      "rank": 2,
+      "interaction_id": 2,
+      "prompt": "How does the PVM paper split the data into labeled and unlabeled sets? I need to replicate the same experimental setup. For USPS specifically, how many labeled examples do they use?",
+      "why_important": "Understanding the exact experimental setup was critical for faithful reproduction."
+    },
+    {
+      "rank": 3,
+      "interaction_id": 3,
+      "prompt": "Can you help me write a justification for why I chose USPS for reproducing PVM results? I need to explain why it's a good choice for evaluating semi-supervised learning methods.",
+      "why_important": "Helped me articulate my dataset choice clearly for the writeup."
+    }
+  ],
+  "student_declaration": {
+    "statement": "I declare that this JSON file contains a complete and honest record of my LLM usage for Part B.",
+    "understanding_acknowledged": true,
+    "signature": "Ritesh Patil",
+    "date": "2026-03-12"
+  }
+}

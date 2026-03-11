@@ -1,0 +1,90 @@
+{
+  "student_metadata": {
+    "name": "Ritesh Patil",
+    "roll_number": "230056",
+    "course": "Advanced Machine Learning",
+    "exam": "Mid-Semester Examination",
+    "part": "Part B",
+    "submission_date": "2026-03-12"
+  },
+  "llm_tools_used": [
+    {
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "provider": "Anthropic"
+    }
+  ],
+  "full_llm_interaction_log": [
+    {
+      "interaction_id": 1,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 1.2",
+      "purpose": "Identify the key assumptions made in the PVM paper",
+      "prompt": "What are the key assumptions that the Prototype Vector Machine paper makes? I need to list both the explicit ones they state and any implicit ones I can find. The paper is about semi-supervised learning using prototype vectors.",
+      "llm_response_used": "Partially",
+      "how_it_helped": "The LLM listed several assumptions including the cluster assumption, manifold assumption, and smoothness assumption. It also mentioned the assumption that a small number of prototypes can capture the data structure. I used some of these but also identified additional implicit assumptions by re-reading the paper myself.",
+      "student_verification": "I went through Sections 2 and 3 of the paper carefully. The cluster assumption and manifold assumption were indeed stated. I also found that the paper implicitly assumes the graph construction (k-NN or epsilon-ball) faithfully represents the data manifold, which the LLM didn't initially mention.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 3
+    },
+    {
+      "interaction_id": 2,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 1.2",
+      "purpose": "Understand when the assumptions might not hold",
+      "prompt": "For the PVM paper, in what kinds of real-world scenarios would the manifold assumption and cluster assumption break down? I want to discuss when these assumptions are reasonable vs not.",
+      "llm_response_used": "Yes",
+      "how_it_helped": "Gave me concrete examples - like high-dimensional sparse text data where manifold assumption may not hold, or overlapping class distributions where cluster assumption fails. This helped me write the critical analysis part of Task 1.2.",
+      "student_verification": "I thought about each example and compared it to datasets mentioned in the paper's experiments. The examples made sense intuitively and I also recalled from class lectures that Prof mentioned similar failure cases for manifold-based methods.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 4
+    },
+    {
+      "interaction_id": 3,
+      "date": "2026-03-12",
+      "tool_name": "Claude Code",
+      "model": "Claude Opus 4.6",
+      "task_tag": "Task 1.2",
+      "purpose": "Clarify the assumption about prototype sufficiency",
+      "prompt": "The PVM paper assumes that a small number of prototypes can adequately represent the structure. What's the theoretical basis for this? Is there a connection to Nystrom approximation or something like that?",
+      "llm_response_used": "Partially",
+      "how_it_helped": "The LLM confirmed the connection to Nystrom-type approximations and explained how prototype selection relates to low-rank approximation of the kernel matrix. However, some of the specific mathematical details it gave were not exactly matching the paper, so I only used the high-level conceptual connection.",
+      "student_verification": "I checked the related work section and found that the paper does cite Nystrom approximation literature. The connection is valid but the specific formulation in PVM is different from standard Nystrom, so I was careful to note that distinction in my writeup.",
+      "code_used_verbatim": false,
+      "student_modification": "",
+      "confidence_level": 3
+    }
+  ],
+  "top_5_prompts": [
+    {
+      "rank": 1,
+      "interaction_id": 1,
+      "prompt": "What are the key assumptions that the Prototype Vector Machine paper makes? I need to list both the explicit ones they state and any implicit ones I can find. The paper is about semi-supervised learning using prototype vectors.",
+      "why_important": "This was the foundational prompt for identifying all assumptions, which is the core requirement of Task 1.2."
+    },
+    {
+      "rank": 2,
+      "interaction_id": 3,
+      "prompt": "The PVM paper assumes that a small number of prototypes can adequately represent the structure. What's the theoretical basis for this? Is there a connection to Nystrom approximation or something like that?",
+      "why_important": "Helped me understand a deeper theoretical assumption that wasn't obvious from surface reading."
+    },
+    {
+      "rank": 3,
+      "interaction_id": 2,
+      "prompt": "For the PVM paper, in what kinds of real-world scenarios would the manifold assumption and cluster assumption break down? I want to discuss when these assumptions are reasonable vs not.",
+      "why_important": "Gave me concrete failure scenarios to make my analysis of assumptions more substantive."
+    }
+  ],
+  "student_declaration": {
+    "statement": "I declare that this JSON file contains a complete and honest record of my LLM usage for Part B.",
+    "understanding_acknowledged": true,
+    "signature": "Ritesh Patil",
+    "date": "2026-03-12"
+  }
+}
